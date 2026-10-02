@@ -1,0 +1,11 @@
+class Solution {
+    public int singleNumber(int[] nums) {
+        // x ^ x = 0
+        // x ^ 0 = x
+        int xor =0;
+        for(int n : nums){
+            xor ^= n;
+        }
+        return xor;
+    }
+}
