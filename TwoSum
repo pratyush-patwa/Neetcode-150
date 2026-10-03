@@ -1,0 +1,59 @@
+import java.util.Arrays;
+import java.util.HashMap;
+
+public class TwoSum {
+    public static void main(String [] args){
+        int [] nums = {1,2,3,7,11};
+        int target = 10;
+        System.out.print(Arrays.toString(twoSum(nums,target)));
+        System.out.print(Arrays.toString(twoSumOptimal(nums,target)));
+
+    }
+    private static int[] twoSum(int [] nums,int target){
+        for(int i=0;i<nums.length-1; i++){
+            for(int j =i+1; j<nums.length; j++){
+                if(nums[i] + nums[j]  == target){
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return new int[]{};
+    }
+    //Only if the array is sorted
+    /*private static int[] twoSumSort(int [] nums,int target){
+
+        for(int i =0; i<nums.length; i++){
+            int required = target - nums[i];
+            int l = i+1; int r= nums.length-1;
+
+            while (l <= r) {
+                int mid = l +(r -l)/2;
+                if(nums[mid] == required){
+                    int j = mid;
+                    return new int[]{i,j};
+                }else if(nums[mid]> required){
+                    r = mid-1;
+                }else {
+                    l = mid + 1;
+                }
+            }
+        }
+        return new int[]{};
+    }
+    */
+
+    private static int[] twoSumOptimal(int [] nums, int target){
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i=0; i<nums.length; i++){
+            int required = target- nums[i];
+            if(!map.containsKey(required)){
+                map.putIfAbsent(nums[i],i);
+            }else{
+                return new int[]{i, map.get(required)};
+            }
+        }
+        return new int[]{};
+        //TC : O(n);
+        //SC : O(n);
+    }
+}
