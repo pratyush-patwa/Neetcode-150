@@ -1,0 +1,51 @@
+import java.util.Arrays;
+
+public class ProductofArrayExceptSelf {
+    public static void main(String[] args){
+        int[] arr= {1,2,3,5};
+
+        System.out.println(Arrays.toString(getProductExceptSelf(arr)));
+        System.out.println(Arrays.toString(getProductExceptSelfOpti(arr)));
+    }
+    private static int[] getProductExceptSelf(int [] arr){
+        int n = arr.length;
+        int[] output = new int[n];
+        int[] pre = new int[n];
+        int[] post = new int[n];
+
+        pre [0] =1;
+        for(int i =1; i<arr.length; i++){
+            pre[i] = pre[i-1]* arr[i-1];
+        }
+        post[n-1] =1;
+        for(int i =n-2; i>=0; i--){
+            post[i] =  post[i+1]* arr[i+1];
+        }
+
+        for(int i =0; i<n; i++){
+            //System.out.println(pre[i] + "  "+ post[i]);
+            output[i] = pre[i] * post[i];
+        }
+        return output;
+    } //TC O(3n) --> O(n)
+    // SC O(3n) --> O(n)
+
+    private static int[] getProductExceptSelfOpti(int [] arr){
+        int n = arr.length;
+        int[] output = new int[n];
+
+        output [0] =1;
+        for(int i =1; i<arr.length; i++){
+            output[i] = output[i-1]* arr[i-1];
+        }
+        int right = 1;
+        for(int i =n-1; i>=0; i--){
+            output[i] *= right;
+            right *= arr[i];
+        }
+
+        return output;
+    }  // TC O(n) -- Sc O(1)
+
+
+}
