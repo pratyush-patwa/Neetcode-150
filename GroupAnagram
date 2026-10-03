@@ -1,0 +1,52 @@
+import java.sql.Array;
+import java.util.*;
+
+
+public class GroupAnagram {
+    public static void main(String[] args){
+        String [] strings1 = {"cat","tac","bat", "mat","tab"};
+        List<List<String>>  result1 = groupedAnagramOpt(strings1);
+        for(List strList: result1){
+            System.out.println(strList);
+        }
+
+        String [] strings2 = {"cat","tac","bat", "act", "mat","tab"};
+        List<List<String>>  result2 = groupedAnagram(strings2);
+        for(List strList: result2){
+            System.out.println(strList);
+        }
+
+
+    }
+    private static List<List<String>> groupedAnagram(String[] strings) {
+        int n= strings.length;
+        if( n == 0)
+            return new ArrayList<>();
+
+        HashMap<String, List<String>> map = new HashMap<>();
+
+        for(String s: strings){ //n
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);//klogk
+            String key = new String(chars);
+            map.computeIfAbsent(key, k->new ArrayList<>()).add(s);
+
+        } //TC: n * (k logk)
+        return  new ArrayList<>(map.values());
+    }
+
+    private static List<List<String>> groupedAnagramOpt(String[] strings) {
+
+        Map<String, List<String>> map = new HashMap<>();
+        for(String s: strings){ // n
+            int []freq = new int [26];
+            char [] chars = s.toCharArray();
+            for(int i =0; i<s.length(); i++) {
+                freq[chars[i] - 'a']++; //k
+            }
+            String key = Arrays.toString(freq);
+            map.computeIfAbsent(key, k-> new ArrayList<>()).add(s);
+        } // Tc (n*k)
+        return new ArrayList<>(map.values());
+    }
+}
